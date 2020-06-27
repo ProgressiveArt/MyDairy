@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -15,6 +16,7 @@ import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Calendar;
@@ -32,6 +34,10 @@ public class DairyActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dairy_main);
+
+        ActionBar actionBar =getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         recordFilter = findViewById(R.id.recordFilter);
 
@@ -126,5 +132,23 @@ public class DairyActivityMain extends AppCompatActivity {
         recordFilter.setText(DateUtils.formatDateTime(this,
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

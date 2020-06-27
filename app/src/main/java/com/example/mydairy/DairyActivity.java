@@ -5,11 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +35,10 @@ public class DairyActivity extends AppCompatActivity {
 
         dateBox = findViewById(R.id.date);
         setInitialDateTime();
+
+        ActionBar actionBar =getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         recordBox = findViewById(R.id.record);
         delButton = findViewById(R.id.deleteButton);
@@ -134,5 +140,24 @@ public class DairyActivity extends AppCompatActivity {
         dateBox.setText(DateUtils.formatDateTime(this,
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, DairyActivityMain.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 }

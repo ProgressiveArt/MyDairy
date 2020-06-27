@@ -67,19 +67,4 @@
         android:text="Удалить"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="17dp"
-        android:onClick="goHome"
-        android:text="Отмена"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/saveButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
