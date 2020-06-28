@@ -24,7 +24,6 @@ import java.util.Calendar;
 public class DairyActivityMain extends AppCompatActivity {
 
     ListView recordList;
-    DatabaseAdapter dbAdapter;
     Cursor recordCursor;
     SimpleCursorAdapter recordAdapter;
     EditText recordFilter;
@@ -35,7 +34,7 @@ public class DairyActivityMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dairy_main);
 
-        ActionBar actionBar =getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -57,18 +56,16 @@ public class DairyActivityMain extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        final DatabaseAdapter adapter = new DatabaseAdapter(this);
+
+        DatabaseAdapter adapter = new DatabaseAdapter(this);
 
         adapter.open();
-
-        recordCursor = adapter.getRecords();
-
-        String[] headers = new String[]{DatabaseHelper.COLUMN_DATE, DatabaseHelper.COLUMN_RECORD};
-        recordAdapter = new SimpleCursorAdapter(this, android.R.layout.two_line_list_item,
-                recordCursor, headers, new int[]{android.R.id.text1, android.R.id.text2}, 0);
-
-        Filter(adapter);
+        Cursor records = adapter.getRecords();
+        String[] headers = new String[]{DatabaseHelper.COLUMN_DATE, DatabaseHelper.COLUMN_RECORD, DatabaseHelper.COLUMN_IMAGE};
+        recordAdapter = new SimpleCursorAdapter(this, R.layout.item_dairy_record, records, headers, new int[]{R.id.textView2, R.id.textView3, R.id.imageView2}, 0);
+        filter(adapter);
         recordList.setAdapter(recordAdapter);
+        adapter.close();
     }
 
     public void add(View view) {
@@ -76,11 +73,12 @@ public class DairyActivityMain extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void Filter(final DatabaseAdapter adapter) {
+    public void filter(final DatabaseAdapter adapter) {
         // если в текстовом поле есть текст, выполняем фильтрацию
         // данная проверка нужна при переходе от одной ориентации экрана к другой
-        if (!recordFilter.getText().toString().isEmpty())
+        if (!recordFilter.getText().toString().isEmpty()) {
             recordAdapter.getFilter().filter(recordFilter.getText().toString());
+        }
 
         recordFilter.addTextChangedListener(new TextWatcher() {
 
@@ -98,7 +96,9 @@ public class DairyActivityMain extends AppCompatActivity {
         recordAdapter.setFilterQueryProvider(new FilterQueryProvider() {
             @Override
             public Cursor runQuery(CharSequence constraint) {
-                return (constraint == null || constraint.length() == 0) ? adapter.getRecords() : adapter.getRecordsLike(new String[]{"%" + constraint.toString() + "%"});
+                return (constraint == null || constraint.length() == 0)
+                        ? adapter.getRecords()
+                        : adapter.getRecordsLike(new String[]{"%" + constraint.toString() + "%"});
             }
         });
     }
@@ -107,7 +107,6 @@ public class DairyActivityMain extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         recordCursor.close();
-        dbAdapter.close();
         finish();
     }
 
@@ -132,6 +131,7 @@ public class DairyActivityMain extends AppCompatActivity {
         recordFilter.setText(DateUtils.formatDateTime(this,
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        onResume();
     }
 
     @Override
