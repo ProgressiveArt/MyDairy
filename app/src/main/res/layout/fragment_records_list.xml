@@ -45,10 +45,9 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="411dp"
-        android:layout_height="445dp"
-        android:divider="@android:color/background_light"
-        android:dividerHeight="10.0sp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

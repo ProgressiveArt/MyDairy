@@ -35,14 +35,12 @@ public class ItemDiaryAdapter extends ArrayAdapter<Record> {
         ArrayList<Record> records = new ArrayList<>();
 
         while (cursorRecords.moveToNext()) {
+            long id = cursorRecords.getLong(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_ID));
             String date = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_DATE));
             String textRecord = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_RECORD));
             String imageBase64 = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_IMAGE));
 
-            Record record = new Record();
-            record.setDate(date);
-            record.setRecord(textRecord);
-            record.setImageBase64(imageBase64);
+            Record record = new Record(id, textRecord, date, imageBase64);
             records.add(record);
         }
 

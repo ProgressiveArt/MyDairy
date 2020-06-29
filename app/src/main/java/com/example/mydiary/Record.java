@@ -8,8 +8,6 @@ public class Record {
     private String record;
     private String imageBase64;
 
-    public Record() {}
-
     public Record(long id, String record, String date, String imageBase64) {
         this.id = id;
         this.record = record;

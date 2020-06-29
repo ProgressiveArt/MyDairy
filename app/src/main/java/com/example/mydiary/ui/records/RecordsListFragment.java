@@ -41,7 +41,6 @@ import java.util.Calendar;
 public class RecordsListFragment extends Fragment {
 
     private Calendar date = Calendar.getInstance();
-    private SimpleCursorAdapter recordAdapter;
     private ListView recordList;
     NavController navController;
     private EditText recordFilter;

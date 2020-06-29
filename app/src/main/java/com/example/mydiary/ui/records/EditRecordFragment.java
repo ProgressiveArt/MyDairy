@@ -86,7 +86,7 @@ public class EditRecordFragment extends Fragment {
         });
 
         if (getArguments() != null && getArguments().containsKey("id")) {
-            recordId = getArguments().getLong("id");
+            recordId = getArguments().getLong("id") + 1;
         }
 
         adapter = new DatabaseAdapter(getActivity());
@@ -95,6 +95,9 @@ public class EditRecordFragment extends Fragment {
             Record record = adapter.getRecord(recordId);
             dateBox.setText(record.getDate());
             recordBox.setText(String.valueOf(record.getRecord()));
+            byte[] decodedString = Base64.decode(record.getImageBase64(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            imageView.setImageBitmap(decodedByte);
             adapter.close();
         } else {
             delButton.setVisibility(View.GONE);
