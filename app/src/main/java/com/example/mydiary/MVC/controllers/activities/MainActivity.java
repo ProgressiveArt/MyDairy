@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.MVC.controllers.activities;
 
 import android.app.NotificationManager;
 import android.content.DialogInterface;
@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.mydiary.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {

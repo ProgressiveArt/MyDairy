@@ -1,4 +1,4 @@
-package com.example.mydiary.ui.adapters;
+package com.example.mydiary.MVC.controllers.fragmnets.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,9 +15,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.mydiary.DatabaseHelper;
+import com.example.mydiary.data.DatabaseHelper;
 import com.example.mydiary.R;
-import com.example.mydiary.Record;
+import com.example.mydiary.MVC.models.Record;
 
 import org.jetbrains.annotations.NotNull;
 

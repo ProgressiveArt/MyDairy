@@ -1,40 +1,29 @@
-package com.example.mydiary.ui.records;
+package com.example.mydiary.MVC.controllers.fragmnets.records;
 
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FilterQueryProvider;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
-import com.example.mydiary.DatabaseAdapter;
-import com.example.mydiary.DatabaseHelper;
+import com.example.mydiary.data.DatabaseAdapter;
 import com.example.mydiary.R;
-import com.example.mydiary.ui.adapters.ItemDiaryAdapter;
+import com.example.mydiary.MVC.controllers.fragmnets.adapters.ItemDiaryAdapter;
 
 import java.util.Calendar;
 

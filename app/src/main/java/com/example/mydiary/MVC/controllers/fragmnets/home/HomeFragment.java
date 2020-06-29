@@ -1,4 +1,4 @@
-package com.example.mydiary.ui.home;
+package com.example.mydiary.MVC.controllers.fragmnets.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

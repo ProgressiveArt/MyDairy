@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.data;
 
 
 import android.database.sqlite.SQLiteOpenHelper;

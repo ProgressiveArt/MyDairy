@@ -1,9 +1,11 @@
-package com.example.mydiary;
+package com.example.mydiary.data;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.mydiary.MVC.models.Record;
 
 public class DatabaseAdapter {
 

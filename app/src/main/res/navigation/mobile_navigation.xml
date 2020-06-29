@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.mydiary.ui.home.HomeFragment"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
-        android:name="com.example.mydiary.ui.home.HomeSecondFragment"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/nav_records"
-        android:name="com.example.mydiary.ui.records.RecordsListFragment"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.records.RecordsListFragment"
         android:label="@string/menu_records"
         tools:layout="@layout/fragment_records_list" >
         <action
@@ -41,12 +41,12 @@
 
     <fragment
         android:id="@+id/nav_sensors"
-        android:name="com.example.mydiary.ui.sensors.sensorsFragment"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.sensors.sensorsFragment"
         android:label="@string/menu_sensors"
         tools:layout="@layout/fragment_sensors" />
     <fragment
         android:id="@+id/fragment_edit_record"
-        android:name="com.example.mydiary.ui.records.EditRecordFragment"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.records.EditRecordFragment"
         android:label="@string/edit_page"
         tools:layout="@layout/fragment_edit_record" />
 </navigation>

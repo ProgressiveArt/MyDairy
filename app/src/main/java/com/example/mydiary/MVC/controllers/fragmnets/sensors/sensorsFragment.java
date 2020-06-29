@@ -1,4 +1,4 @@
-package com.example.mydiary.ui.sensors;
+package com.example.mydiary.MVC.controllers.fragmnets.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;

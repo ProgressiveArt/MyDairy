@@ -1,4 +1,4 @@
-package com.example.mydiary;
+package com.example.mydiary.MVC.models;
 
 import org.jetbrains.annotations.NotNull;
 
