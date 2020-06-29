@@ -12,7 +12,9 @@ import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,6 +34,8 @@ public class sensorsFragment extends Fragment {
     Sensor sensorMagnet;
     Sensor sensorLight;
 
+    private int countThreads;
+
     StringBuilder sb = new StringBuilder();
     Timer timer;
     int rotation;
@@ -49,23 +53,35 @@ public class sensorsFragment extends Fragment {
         sensorMagnet = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
+        Button getThrCounts = root.findViewById(R.id.button_count_thr);
+        getThrCounts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Toast.makeText(getActivity(),"Количество используемых датчиков = " + countThreads,Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return root;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        countThreads = 0;
         sensorManager.registerListener(listener, sensorAccel,
                 SensorManager.SENSOR_DELAY_NORMAL);
+        countThreads++;
         sensorManager.registerListener(listener, sensorLinAccel,
                 SensorManager.SENSOR_DELAY_NORMAL);
+        countThreads++;
         sensorManager.registerListener(listener, sensorGravity,
                 SensorManager.SENSOR_DELAY_NORMAL);
+        countThreads++;
         sensorManager.registerListener(listener, sensorMagnet,
                 SensorManager.SENSOR_DELAY_NORMAL);
+        countThreads++;
         sensorManager.registerListener(listener, sensorLight,
                 SensorManager.SENSOR_DELAY_NORMAL);
-
+        countThreads++;
 
         timer = new Timer();
         TimerTask task = new TimerTask() {

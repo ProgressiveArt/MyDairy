@@ -23,4 +23,5 @@
     <string name="about_title">About</string>
     <string name="exit_title">Выход</string>
     <string name="send_notifi_text">Отправить уведомление</string>
+    <string name="count_threads">Узнать кол-во используемых сенсоров</string>
 </resources>
