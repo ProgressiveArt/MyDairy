@@ -3,11 +3,12 @@ package com.example.mydiary;
 import org.jetbrains.annotations.NotNull;
 
 public class Record {
-
     private long id;
     private String date;
     private String record;
     private String imageBase64;
+
+    public Record() {}
 
     public Record(long id, String record, String date, String imageBase64) {
         this.id = id;

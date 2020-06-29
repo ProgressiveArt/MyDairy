@@ -23,7 +23,17 @@ public class DatabaseAdapter {
     }
 
     public Cursor getRecords() {
-        return database.rawQuery("select * from " + DatabaseHelper.TABLE, null);
+        return getRecords(null);
+    }
+
+    public Cursor getRecords(String constraint) {
+        if (constraint == null || constraint.trim().length() == 0) {
+            return database.rawQuery("select * from " + DatabaseHelper.TABLE, null);
+        }
+
+        return database.rawQuery("select * " +
+                "from " + DatabaseHelper.TABLE + " " +
+                "where " + DatabaseHelper.COLUMN_DATE + "='" + constraint + "'", null);
     }
 
     public Cursor getRecordsLike(String[] likeString) {

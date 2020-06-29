@@ -3,22 +3,29 @@ package com.example.mydiary.ui.records;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -27,6 +34,7 @@ import androidx.navigation.Navigation;
 import com.example.mydiary.DatabaseAdapter;
 import com.example.mydiary.DatabaseHelper;
 import com.example.mydiary.R;
+import com.example.mydiary.ui.adapters.ItemDiaryAdapter;
 
 import java.util.Calendar;
 
@@ -78,41 +86,19 @@ public class RecordsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DatabaseAdapter adapter = new DatabaseAdapter(getActivity());
-        adapter.open();
-        Cursor records = adapter.getRecords();
-        String[] headers = new String[]{DatabaseHelper.COLUMN_DATE, DatabaseHelper.COLUMN_RECORD, DatabaseHelper.COLUMN_IMAGE};
-        recordAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_diary_record, records, headers, new int[]{R.id.textView2, R.id.textView3, R.id.imageView2}, 0);
-        filter(adapter);
-        recordList.setAdapter(recordAdapter);
-
-        adapter.close();
+        refreshRecordList(recordFilter.getText().toString());
     }
 
-    public void filter(final DatabaseAdapter adapter) {
-        // если в текстовом поле есть текст, выполняем фильтрацию
-        // данная проверка нужна при переходе от одной ориентации экрана к другой
-        if (!recordFilter.getText().toString().isEmpty()) {
-            recordAdapter.getFilter().filter(recordFilter.getText().toString());
-        }
-        recordFilter.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                recordAdapter.getFilter().filter(s.toString());
-            }
-        });
+    private void refreshRecordList(String filterConstraint) {
+        DatabaseAdapter adapter = new DatabaseAdapter(getActivity());
+        adapter.open();
 
-        recordAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                return (constraint == null || constraint.length() == 0)
-                        ? adapter.getRecords()
-                        : adapter.getRecordsLike(new String[]{"%" + constraint.toString() + "%"});
-            }
-        });
+        Cursor cursorRecords = adapter.getRecords(filterConstraint);
+
+        ItemDiaryAdapter itemDiaryAdapter = new ItemDiaryAdapter(getActivity(), cursorRecords);
+        recordList.setAdapter(itemDiaryAdapter);
+
+        adapter.close();
     }
 
     private void setDate(View v) {
@@ -136,6 +122,6 @@ public class RecordsListFragment extends Fragment {
         recordFilter.setText(DateUtils.formatDateTime(getActivity(),
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-        onResume();
+        refreshRecordList(recordFilter.getText().toString());
     }
 }

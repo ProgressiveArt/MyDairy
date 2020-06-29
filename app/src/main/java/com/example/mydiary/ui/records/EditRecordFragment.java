@@ -105,10 +105,11 @@ public class EditRecordFragment extends Fragment {
                 .allowMultiple(false)
                 .build();
 
+        final Fragment thisFragment = this;
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                easyImage.openGallery(getActivity());
+                easyImage.openGallery(thisFragment);
             }
         });
         return root;
@@ -149,7 +150,7 @@ public class EditRecordFragment extends Fragment {
         if (alert != null) {
             new AlertDialog.Builder(getActivity())
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle("Запись не может быть пустой!!!")
+                    .setTitle(alert)
                     .setPositiveButton("Ок", null)
                     .show();
         } else {
@@ -175,8 +176,7 @@ public class EditRecordFragment extends Fragment {
     }
 
     private String getImageBase64() {
-
-        if (imageView == null) {
+        if (imageView == null || imageView.getDrawable() == null) {
             return null;
         }
 
@@ -188,7 +188,6 @@ public class EditRecordFragment extends Fragment {
     }
 
     private String getAlert(Record record) {
-
         if (record.getRecord().trim().equals("")) {
             return "Запись не может быть пустой!!!";
         }
