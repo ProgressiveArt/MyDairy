@@ -1,5 +1,7 @@
 package com.example.mydairy;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Record {
 
     private long id;
@@ -7,15 +9,17 @@ public class Record {
     private String record;
     private String imageBase64;
 
-    Record(long id, String imageBase64, String record, String date){
+    public Record(long id, String record, String date, String imageBase64) {
         this.id = id;
         this.record = record;
         this.date = date;
         this.imageBase64 = imageBase64;
     }
+
     public long getId() {
         return id;
     }
+
     public String getRecord() {
         return record;
     }
@@ -32,16 +36,17 @@ public class Record {
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return this.record + " : " + this.date;
-    }
-
     public String getImageBase64() {
         return imageBase64;
     }
 
     public void setImageBase64(String imageBase64) {
         this.imageBase64 = imageBase64;
+    }
+
+    @NotNull
+    @Override
+    public String toString() {
+        return this.record + " : " + this.date;
     }
 }

@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="1"
-        android:title="Настройки" />
-
-    <item
         android:id="@+id/about_settings"
         android:orderInCategory="2"
-
-        android:title="About" />
+        android:title="@string/about_title" />
 
     <item
         android:id="@+id/exit_settings"
         android:orderInCategory="3"
-        android:title="Выход" />
+        android:title="@string/exit_title" />
 </menu>

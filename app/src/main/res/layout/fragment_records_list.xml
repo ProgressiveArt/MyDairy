@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DairyActivityMain">
+    tools:context=".ui.records.RecordsListFragment">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="add"
-        android:text="Добавить"
-        android:textSize="18dp"
+        android:text="@string/add_text"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -23,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:enabled="false"
-        android:hint="Поиск по дате"
+        android:hint="@string/record_filter_hint"
         android:textAlignment="center"
         android:textIsSelectable="true"
         android:textStyle="bold"
@@ -37,8 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="setDate"
-        android:text="Указать дату для поиска"
+        android:text="@string/date_filter_button_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,12 +44,12 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="408dp"
-        android:layout_height="580dp"
+        android:layout_width="411dp"
+        android:layout_height="445dp"
         android:divider="@android:color/background_light"
         android:dividerHeight="10.0sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

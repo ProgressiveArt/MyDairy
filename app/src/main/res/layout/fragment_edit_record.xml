@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DairyActivity">
+    tools:context=".ui.records.EditRecordFragment">
 
     <EditText
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:enabled="false"
-        android:hint="Дата"
+        android:hint="@string/date_hint"
         android:textAlignment="center"
         android:textIsSelectable="true"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:hint="Введите текст записи"
+        android:hint="@string/record_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,10 +36,8 @@
         android:id="@+id/dateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:onClick="setDate"
-        android:text="Указать дату"
-        app:layout_constraintBottom_toTopOf="@+id/record"
+        android:layout_marginTop="8dp"
+        android:text="@string/date_button_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/date" />
@@ -51,8 +49,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:onClick="save"
-        android:text="Сохранить"
+        android:text="@string/save_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -63,8 +60,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:onClick="delete"
-        android:text="Удалить"
+        android:text="@string/del_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -73,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Выбрать изображение"
+        android:text="@string/get_img_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />

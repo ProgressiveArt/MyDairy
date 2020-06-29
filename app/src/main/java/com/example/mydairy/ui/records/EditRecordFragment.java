@@ -1,6 +1,5 @@
-package com.example.mydairy;
+package com.example.mydairy.ui.records;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,17 +9,23 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Base64;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
+import com.example.mydairy.DatabaseAdapter;
+import com.example.mydairy.R;
+import com.example.mydairy.Record;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
@@ -30,45 +35,61 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 import pl.aprilapps.easyphotopicker.MediaFile;
 import pl.aprilapps.easyphotopicker.MediaSource;
 
-public class DairyActivity extends AppCompatActivity {
 
-    EditText dateBox;
-    EditText recordBox;
-    Button delButton;
-    Button saveButton;
+public class EditRecordFragment extends Fragment {
+    private Calendar date = Calendar.getInstance();
+    NavController navController;
+
+    private EditText dateBox;
+    private EditText recordBox;
+
     Button getImage;
-    Calendar date = Calendar.getInstance();
     EasyImage easyImage;
     ImageView imageView;
 
     private DatabaseAdapter adapter;
-    long recordId = 0;
+    private long recordId = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dairy);
 
-        dateBox = findViewById(R.id.date);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        final View root = inflater.inflate(R.layout.fragment_edit_record, container, false);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+
+        getImage = root.findViewById(R.id.getImage);
+        imageView = root.findViewById(R.id.imageView2);
+
+        recordBox = root.findViewById(R.id.record);
+        dateBox = root.findViewById(R.id.date);
         setInitialDateTime();
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        recordBox = findViewById(R.id.record);
-        delButton = findViewById(R.id.deleteButton);
-        saveButton = findViewById(R.id.saveButton);
-        getImage = findViewById(R.id.getImage);
-        imageView = findViewById(R.id.imageView2);
-        adapter = new DatabaseAdapter(this);
+        Button dateButton = root.findViewById(R.id.dateButton);
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setDate(root);
+            }
+        });
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            recordId = extras.getLong("id");
+        Button delButton = root.findViewById(R.id.deleteButton);
+        delButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                delete(root);
+            }
+        });
+
+        Button saveButton = root.findViewById(R.id.saveButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                save(root);
+            }
+        });
+
+        if (getArguments() != null && getArguments().containsKey("id")) {
+            recordId = getArguments().getLong("id");
         }
 
+        adapter = new DatabaseAdapter(getActivity());
         if (recordId > 0) {
             adapter.open();
             Record record = adapter.getRecord(recordId);
@@ -79,8 +100,7 @@ public class DairyActivity extends AppCompatActivity {
             delButton.setVisibility(View.GONE);
         }
 
-        final Activity thisActivity = this;
-        easyImage = new EasyImage.Builder(this)
+        easyImage = new EasyImage.Builder(getActivity())
                 .setCopyImagesToPublicGalleryFolder(false)
                 .allowMultiple(false)
                 .build();
@@ -88,15 +108,16 @@ public class DairyActivity extends AppCompatActivity {
         getImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                easyImage.openGallery(thisActivity);
+                easyImage.openGallery(getActivity());
             }
         });
+        return root;
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        easyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+        easyImage.handleActivityResult(requestCode, resultCode, data, getActivity(), new DefaultCallback() {
             @Override
             public void onMediaFilesPicked(MediaFile[] imageFiles, MediaSource source) {
                 MediaFile imageFile = imageFiles[0];
@@ -117,23 +138,23 @@ public class DairyActivity extends AppCompatActivity {
         });
     }
 
-    public void save(final View view) {
+    public void save(View view) {
         String date = dateBox.getText().toString();
         String textRecord = recordBox.getText().toString();
         String imageBase64 = getImageBase64();
-        final Record record = new Record(recordId, imageBase64, date, textRecord);
+        final Record record = new Record(recordId, textRecord, date, imageBase64);
 
         String alert = getAlert(record);
 
         if (alert != null) {
-            new AlertDialog.Builder(this)
+            new AlertDialog.Builder(getActivity())
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setTitle(alert)
+                    .setTitle("Запись не может быть пустой!!!")
                     .setPositiveButton("Ок", null)
                     .show();
         } else {
-            new AlertDialog.Builder(this)
-                    .setIcon(android.R.drawable.ic_dialog_alert)
+            new AlertDialog.Builder(getActivity())
+                    .setIcon(android.R.drawable.ic_dialog_info)
                     .setTitle("Сохранить изменения?")
                     .setPositiveButton("Да", new DialogInterface.OnClickListener() {
                         @Override
@@ -145,7 +166,7 @@ public class DairyActivity extends AppCompatActivity {
                                 adapter.insert(record);
                             }
                             adapter.close();
-                            goHome(view);
+                            navController.navigate(R.id.nav_records);
                         }
                     })
                     .setNegativeButton("Нет", null)
@@ -154,6 +175,7 @@ public class DairyActivity extends AppCompatActivity {
     }
 
     private String getImageBase64() {
+
         if (imageView == null) {
             return null;
         }
@@ -166,6 +188,7 @@ public class DairyActivity extends AppCompatActivity {
     }
 
     private String getAlert(Record record) {
+
         if (record.getRecord().trim().equals("")) {
             return "Запись не может быть пустой!!!";
         }
@@ -177,8 +200,8 @@ public class DairyActivity extends AppCompatActivity {
         return null;
     }
 
-    public void delete(final View view) {
-        new AlertDialog.Builder(this)
+    public void delete(View view) {
+        new AlertDialog.Builder(getActivity())
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Удаление записи")
                 .setMessage("Вы уверены, что хотите удалить запись?")
@@ -188,28 +211,22 @@ public class DairyActivity extends AppCompatActivity {
                         adapter.open();
                         adapter.delete(recordId);
                         adapter.close();
-                        goHome(view);
+                        navController.navigate(R.id.nav_records);
                     }
                 })
                 .setNegativeButton("Нет", null)
                 .show();
     }
 
-    public void goHome(View view) {
-        Intent intent = new Intent(this, DairyActivityMain.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-    }
-
-    public void setDate(View v) {
-        new DatePickerDialog(DairyActivity.this, d,
+    private void setDate(View v) {
+        new DatePickerDialog(v.getContext(), d,
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH))
                 .show();
     }
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+    private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             date.set(Calendar.YEAR, year);
             date.set(Calendar.MONTH, monthOfYear);
@@ -219,27 +236,8 @@ public class DairyActivity extends AppCompatActivity {
     };
 
     private void setInitialDateTime() {
-        dateBox.setText(DateUtils.formatDateTime(this,
+        dateBox.setText(DateUtils.formatDateTime(getActivity(),
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, DairyActivityMain.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
     }
 }
