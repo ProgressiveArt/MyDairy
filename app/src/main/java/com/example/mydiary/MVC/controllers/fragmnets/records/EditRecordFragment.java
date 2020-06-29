@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.mydiary.MVC.controllers.listeners.OnClickRateLimitedDecoratedListener;
 import com.example.mydiary.data.DatabaseAdapter;
 import com.example.mydiary.R;
 import com.example.mydiary.MVC.models.Record;
@@ -63,27 +64,31 @@ public class EditRecordFragment extends Fragment {
         dateBox = root.findViewById(R.id.date);
         setInitialDateTime();
 
+        int buttonDelay = 500;
         Button dateButton = root.findViewById(R.id.dateButton);
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        dateButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 setDate(root);
             }
-        });
+        },buttonDelay));
 
 
         Button delButton = root.findViewById(R.id.deleteButton);
-        delButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        delButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 delete(root);
             }
-        });
+        },buttonDelay));
 
         Button saveButton = root.findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        saveButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 save(root);
             }
-        });
+        },buttonDelay));
 
         if (getArguments() != null && getArguments().containsKey("id")) {
             recordId = getArguments().getLong("id") + 1;

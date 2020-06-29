@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.mydiary.MVC.controllers.listeners.OnClickRateLimitedDecoratedListener;
 import com.example.mydiary.R;
 
 import java.util.Timer;
@@ -54,11 +55,12 @@ public class sensorsFragment extends Fragment {
         sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         Button getThrCounts = root.findViewById(R.id.button_count_thr);
-        getThrCounts.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast.makeText(getActivity(),"Количество используемых датчиков = " + countThreads,Toast.LENGTH_SHORT).show();
+        getThrCounts.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"Количество отображаемых датчиков = " + countThreads,Toast.LENGTH_SHORT).show();
             }
-        });
+        }, 2550));
 
         return root;
     }

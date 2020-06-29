@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,6 +20,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
+import com.example.mydiary.MVC.controllers.listeners.OnClickRateLimitedDecoratedListener;
 import com.example.mydiary.data.DatabaseAdapter;
 import com.example.mydiary.R;
 import com.example.mydiary.MVC.controllers.fragmnets.adapters.ItemDiaryAdapter;
@@ -50,13 +50,14 @@ public class RecordsListFragment extends Fragment {
                 navController.navigate(R.id.fragment_edit_record, bundle);
             }
         });
-
+        int buttonDelay = 300;
         Button dateButton = root.findViewById(R.id.dateButton);
-        dateButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        dateButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 setDate(root);
             }
-        });
+        }));
 
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
