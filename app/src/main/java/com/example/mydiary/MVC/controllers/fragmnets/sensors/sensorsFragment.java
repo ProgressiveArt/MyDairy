@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -46,6 +47,8 @@ public class sensorsFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_sensors, container, false);
 
         tvText = (TextView) root.findViewById(R.id.tvText);
+        tvText.setMovementMethod(new ScrollingMovementMethod());
+
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         sensorAccel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorLinAccel = sensorManager
@@ -138,7 +141,7 @@ public class sensorsFragment extends Fragment {
                 .append("\n\nДанные по ориентации в пространстве с учетом ориентации экрана устройства.")
                 .append("\nOrientation 2 : " + format(valuesResult2))
                 .append("\n\nТекущее значение освещенности")
-                .append("\nLight : " + format(valueLight));
+                .append("\nLight : " + format(valueLight) + "\n");
         tvText.setText(sb);
     }
 
