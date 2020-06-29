@@ -1,6 +1,5 @@
 package com.example.mydiary.MVC.controllers.activities;
 
-import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,6 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,29 +18,13 @@ import com.example.mydiary.R;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private static final int NOTIFY_ID = 101;
-    private static String CHANNEL_ID = "Sensors channel";
     private AppBarConfiguration mAppBarConfiguration;
-
     NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        //ЭТА ГАДОСТЬ ПОЧЕМУ-ТО У МЕНЯ НЕ РАБОТАЕТ
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Напоминание")
-                        .setContentText("Приложение запущено! ^_^")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFY_ID, builder.build());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
