@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyDairy</string>
+    <string name="app_name">MyDiary</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Мой ежедневник</string>
@@ -22,5 +22,5 @@
     <string name="get_img_text">Выбрать изображение</string>
     <string name="about_title">About</string>
     <string name="exit_title">Выход</string>
-    <string name="send_notifi_text">Отправить уедомление</string>
+    <string name="send_notifi_text">Отправить уведомление</string>
 </resources>

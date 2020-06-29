@@ -1,4 +1,4 @@
-package com.example.mydairy.ui.records;
+package com.example.mydiary.ui.records;
 
 
 import android.app.DatePickerDialog;
@@ -24,9 +24,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 
-import com.example.mydairy.DatabaseAdapter;
-import com.example.mydairy.DatabaseHelper;
-import com.example.mydairy.R;
+import com.example.mydiary.DatabaseAdapter;
+import com.example.mydiary.DatabaseHelper;
+import com.example.mydiary.R;
 
 import java.util.Calendar;
 
@@ -82,7 +82,7 @@ public class RecordsListFragment extends Fragment {
         adapter.open();
         Cursor records = adapter.getRecords();
         String[] headers = new String[]{DatabaseHelper.COLUMN_DATE, DatabaseHelper.COLUMN_RECORD, DatabaseHelper.COLUMN_IMAGE};
-        recordAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_dairy_record, records, headers, new int[]{R.id.textView2, R.id.textView3, R.id.imageView2}, 0);
+        recordAdapter = new SimpleCursorAdapter(getActivity(), R.layout.item_diary_record, records, headers, new int[]{R.id.textView2, R.id.textView3, R.id.imageView2}, 0);
         filter(adapter);
         recordList.setAdapter(recordAdapter);
 

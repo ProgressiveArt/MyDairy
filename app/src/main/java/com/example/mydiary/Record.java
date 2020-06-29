@@ -1,4 +1,4 @@
-package com.example.mydairy;
+package com.example.mydiary;
 
 import org.jetbrains.annotations.NotNull;
 

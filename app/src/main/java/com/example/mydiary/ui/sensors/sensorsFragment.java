@@ -1,4 +1,4 @@
-package com.example.mydairy.ui.sensors;
+package com.example.mydiary.ui.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.mydairy.R;
+import com.example.mydiary.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

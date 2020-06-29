@@ -1,1 +1,1 @@
-MyDairy
+MyDiary

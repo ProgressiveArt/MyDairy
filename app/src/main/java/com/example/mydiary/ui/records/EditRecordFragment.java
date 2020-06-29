@@ -1,4 +1,4 @@
-package com.example.mydairy.ui.records;
+package com.example.mydiary.ui.records;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -23,9 +23,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.mydairy.DatabaseAdapter;
-import com.example.mydairy.R;
-import com.example.mydairy.Record;
+import com.example.mydiary.DatabaseAdapter;
+import com.example.mydiary.R;
+import com.example.mydiary.Record;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
