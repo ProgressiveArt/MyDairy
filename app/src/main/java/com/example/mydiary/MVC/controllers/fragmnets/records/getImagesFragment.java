@@ -75,8 +75,8 @@ public class getImagesFragment extends Fragment {
 
                 titleList.clear();
 
-                for (Element titles : title.select("data-original")) {
-                    titleList.add(titles.text());
+                for (int i = 0; i < title.size(); i++) {
+                    titleList.add(title.get(0).attributes().get("data-original"));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
