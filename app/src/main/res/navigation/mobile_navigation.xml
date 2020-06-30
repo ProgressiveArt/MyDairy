@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_get_images"
-        android:name="com.example.mydiary.MVC.controllers.fragmnets.records.getImagesFragment"
-        android:label="fragment_get_images"
+        android:name="com.example.mydiary.MVC.controllers.fragmnets.records.GetImagesFragment"
+        android:label="@string/choose_img"
         tools:layout="@layout/fragment_get_images" />
 </navigation>

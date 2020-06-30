@@ -1,62 +1,65 @@
 package com.example.mydiary.MVC.controllers.fragmnets.records;
 
 
-import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
+import com.example.mydiary.MVC.controllers.fragmnets.adapters.ItemImageAdapter;
 import com.example.mydiary.R;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-import javax.net.ssl.HttpsURLConnection;
-
-public class getImagesFragment extends Fragment {
+public class GetImagesFragment extends Fragment {
 
     public Elements title;
-
     public ArrayList<String> titleList = new ArrayList<String>();
-
     private ArrayAdapter<String> adapter;
-
     private ListView lv;
+    NavController navController;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_get_images, container, false);
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         lv = root.findViewById(R.id.listView1);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                bundle.putString("url", titleList.get((int) id));
+                navController.navigate(R.id.fragment_edit_record, bundle);
+            }
+        });
 
         Thread myThready = new Thread(new Runnable()
         {
-            public void run() //Этот метод будет выполняться в побочном потоке
+            public void run()
             {
                 new NewThread().execute();
             }
         });
         myThready.start();
 
-
-        adapter = new ArrayAdapter<>(getActivity(), R.layout.item_get_images, R.id.url, titleList);
+        adapter = new ItemImageAdapter(getActivity(), titleList);
 
         return root;
     }
@@ -76,7 +79,7 @@ public class getImagesFragment extends Fragment {
                 titleList.clear();
 
                 for (int i = 0; i < title.size(); i++) {
-                    titleList.add(title.get(0).attributes().get("data-original"));
+                    titleList.add(title.get(i).attributes().get("data-original"));
                 }
             } catch (IOException e) {
                 e.printStackTrace();

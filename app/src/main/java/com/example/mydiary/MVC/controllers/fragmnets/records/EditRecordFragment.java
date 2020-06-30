@@ -98,6 +98,19 @@ public class EditRecordFragment extends Fragment {
             }
         }, buttonDelay));
 
+        if (getArguments() != null && getArguments().containsKey("url")) {
+            imagePath = getArguments().getString("url");
+
+            Bitmap bmp = null;
+            GetImg getImg = new GetImg(getActivity());
+            getImg.execute(imagePath);
+            try {
+                bmp = getImg.get();
+            } catch (Exception e) {
+            }
+            imageView.setImageBitmap(bmp);
+        }
+
         if (getArguments() != null && getArguments().containsKey("id")) {
             recordId = getArguments().getLong("id") + 1;
         }
@@ -108,7 +121,18 @@ public class EditRecordFragment extends Fragment {
             Record record = adapter.getRecord(recordId);
             dateBox.setText(record.getDate());
             recordBox.setText(String.valueOf(record.getRecord()));
-            Bitmap bitmap = BitmapFactory.decodeFile(record.getImagePath());
+            imagePath = record.getImagePath();
+            Bitmap bitmap = null;
+            if(imagePath.contains("EasyImage")) {
+                bitmap = BitmapFactory.decodeFile(imagePath);
+            } else {
+                GetImg getImg = new GetImg(getActivity());
+                getImg.execute(imagePath);
+                try {
+                    bitmap = getImg.get();
+                } catch (Exception e) {
+                }
+            }
             imageView.setImageBitmap(bitmap);
             adapter.close();
         } else {
@@ -124,17 +148,9 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (hasConnection(getActivity()) == true) {
-                    navController.navigate(R.id.fragment_get_images); //Переход на будущее
-//                    Bitmap bmp = null;
-//                    GetImg getImg = new GetImg(getActivity());
-//                    getImg.execute("https://cdn.icon-icons.com/icons2/2416/PNG/128/letter_love_mail_message_post_wings_valentine_icon_146720.png");
-//                    try {
-//                        bmp = getImg.get();
-//                    } catch (Exception e) {
-//                    }
-//                    imageView.setImageBitmap(bmp);
+                    navController.navigate(R.id.fragment_get_images);
                 } else {
-                    Toast.makeText(getActivity(),"Нет доступа в интернет, но можно загрузить картинку с телефона" ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Нет доступа в интернет, но можно загрузить картинку с телефона", Toast.LENGTH_SHORT).show();
                 }
             }
         });

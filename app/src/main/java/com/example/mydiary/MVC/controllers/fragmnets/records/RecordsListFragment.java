@@ -36,7 +36,7 @@ public class RecordsListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_records_list, container, false);
-
+        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
         recordFilter = root.findViewById(R.id.recordFilter);
 
         recordList = root.findViewById(R.id.list);
@@ -48,7 +48,7 @@ public class RecordsListFragment extends Fragment {
                 navController.navigate(R.id.fragment_edit_record, bundle);
             }
         });
-        int buttonDelay = 300;
+
         Button dateButton = root.findViewById(R.id.dateButton);
         dateButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
             @Override
@@ -56,8 +56,6 @@ public class RecordsListFragment extends Fragment {
                 setDate(root);
             }
         }));
-
-        navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
         Button addButton = root.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {

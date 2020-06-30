@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.mydiary.MVC.controllers.fragmnets.records.GetImg;
 import com.example.mydiary.data.DatabaseHelper;
 import com.example.mydiary.R;
 import com.example.mydiary.MVC.models.Record;
@@ -58,7 +59,20 @@ public class ItemDiaryAdapter extends ArrayAdapter<Record> {
 
         ((TextView) convertView.findViewById(R.id.textView2)).setText(record.getDate());
         ((TextView) convertView.findViewById(R.id.textView3)).setText(record.getRecord());
-        Bitmap bitmap = BitmapFactory.decodeFile(record.getImagePath());
+
+        String imagePath = record.getImagePath();
+        Bitmap bitmap = null;
+        if(imagePath.contains("EasyImage")) {
+            bitmap = BitmapFactory.decodeFile(imagePath);
+        } else {
+            GetImg getImg = new GetImg(convertView.getContext());
+            getImg.execute(imagePath);
+            try {
+                bitmap = getImg.get();
+            } catch (Exception e) {
+            }
+        }
+
         ((ImageView) convertView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
 
         return convertView;

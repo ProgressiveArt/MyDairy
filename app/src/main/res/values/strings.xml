@@ -10,6 +10,7 @@
     <string name="menu_records">Ежедневник</string>
     <string name="menu_sensors">Датчики</string>
     <string name="edit_page">Редактор</string>
+    <string name="choose_img">Выберите изображение</string>
     <string name="home_second">Home Second</string>
     <string name="date_hint">Дата</string>
     <string name="date_button_hint">Указать дату</string>
