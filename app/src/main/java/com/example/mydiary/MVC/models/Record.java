@@ -6,13 +6,13 @@ public class Record {
     private long id;
     private String date;
     private String record;
-    private String imageBase64;
+    private String imagePath;
 
-    public Record(long id, String record, String date, String imageBase64) {
+    public Record(long id, String record, String date, String imagePath) {
         this.id = id;
         this.record = record;
         this.date = date;
-        this.imageBase64 = imageBase64;
+        this.imagePath = imagePath;
     }
 
     public long getId() {
@@ -35,12 +35,12 @@ public class Record {
         this.date = date;
     }
 
-    public String getImageBase64() {
-        return imageBase64;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImageBase64(String imageBase64) {
-        this.imageBase64 = imageBase64;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     @NotNull

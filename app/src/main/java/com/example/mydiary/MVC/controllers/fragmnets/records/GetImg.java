@@ -12,12 +12,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetImg extends AsyncTask<String,Void, Bitmap> {
-
+public class GetImg extends AsyncTask<String, Void, Bitmap> {
     @SuppressLint("StaticFieldLeak")
     Context mcontext;
 
-    public GetImg(Context context){
+    public GetImg(Context context) {
         mcontext = context;
     }
 

@@ -38,9 +38,9 @@ public class ItemDiaryAdapter extends ArrayAdapter<Record> {
             long id = cursorRecords.getLong(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_ID));
             String date = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_DATE));
             String textRecord = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_RECORD));
-            String imageBase64 = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_IMAGE));
+            String imagePath = cursorRecords.getString(cursorRecords.getColumnIndex(DatabaseHelper.COLUMN_IMAGE));
 
-            Record record = new Record(id, textRecord, date, imageBase64);
+            Record record = new Record(id, textRecord, date, imagePath);
             records.add(record);
         }
 
@@ -58,9 +58,8 @@ public class ItemDiaryAdapter extends ArrayAdapter<Record> {
 
         ((TextView) convertView.findViewById(R.id.textView2)).setText(record.getDate());
         ((TextView) convertView.findViewById(R.id.textView3)).setText(record.getRecord());
-        byte[] decodedString = Base64.decode(record.getImageBase64(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        ((ImageView) convertView.findViewById(R.id.imageView)).setImageBitmap(decodedByte);
+        Bitmap bitmap = BitmapFactory.decodeFile(record.getImagePath());
+        ((ImageView) convertView.findViewById(R.id.imageView)).setImageBitmap(bitmap);
 
         return convertView;
     }

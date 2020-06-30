@@ -51,7 +51,9 @@ public class EditRecordFragment extends Fragment {
     Button getImageFromDevice;
     Button getImageFromServer;
     EasyImage easyImage;
+
     ImageView imageView;
+    String imagePath;
 
     private DatabaseAdapter adapter;
     private long recordId = 0;
@@ -106,9 +108,8 @@ public class EditRecordFragment extends Fragment {
             Record record = adapter.getRecord(recordId);
             dateBox.setText(record.getDate());
             recordBox.setText(String.valueOf(record.getRecord()));
-            byte[] decodedString = Base64.decode(record.getImageBase64(), Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            imageView.setImageBitmap(decodedByte);
+            Bitmap bitmap = BitmapFactory.decodeFile(record.getImagePath());
+            imageView.setImageBitmap(bitmap);
             adapter.close();
         } else {
             delButton.setVisibility(View.GONE);
@@ -155,7 +156,8 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onMediaFilesPicked(MediaFile[] imageFiles, MediaSource source) {
                 MediaFile imageFile = imageFiles[0];
-                Bitmap bmp = BitmapFactory.decodeFile(imageFile.getFile().getAbsolutePath());
+                imagePath = imageFile.getFile().getAbsolutePath();
+                Bitmap bmp = BitmapFactory.decodeFile(imagePath);
                 imageView.setImageBitmap(bmp);
             }
 
@@ -213,11 +215,7 @@ public class EditRecordFragment extends Fragment {
             return null;
         }
 
-        Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] imageInByte = baos.toByteArray();
-        return Base64.encodeToString(imageInByte, Base64.DEFAULT);
+        return imagePath;
     }
 
     private String getAlert(Record record) {
@@ -225,7 +223,7 @@ public class EditRecordFragment extends Fragment {
             return "Запись не может быть пустой!!!";
         }
 
-        if (record.getImageBase64() == null) {
+        if (record.getImagePath() == null) {
             return "Картинка не загружена :с";
         }
 

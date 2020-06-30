@@ -61,7 +61,7 @@ public class DatabaseAdapter {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COLUMN_DATE, record.getDate());
         cv.put(DatabaseHelper.COLUMN_RECORD, record.getRecord());
-        cv.put(DatabaseHelper.COLUMN_IMAGE, record.getImageBase64());
+        cv.put(DatabaseHelper.COLUMN_IMAGE, record.getImagePath());
         database.insert(DatabaseHelper.TABLE, null, cv);
     }
 
@@ -76,7 +76,7 @@ public class DatabaseAdapter {
         ContentValues cv = new ContentValues();
         cv.put(DatabaseHelper.COLUMN_DATE, record.getDate());
         cv.put(DatabaseHelper.COLUMN_RECORD, record.getRecord());
-        cv.put(DatabaseHelper.COLUMN_IMAGE, record.getImageBase64());
+        cv.put(DatabaseHelper.COLUMN_IMAGE, record.getImagePath());
         database.update(DatabaseHelper.TABLE, cv, whereClause, null);
     }
 }

@@ -28,7 +28,6 @@ import com.example.mydiary.MVC.controllers.fragmnets.adapters.ItemDiaryAdapter;
 import java.util.Calendar;
 
 public class RecordsListFragment extends Fragment {
-
     private Calendar date = Calendar.getInstance();
     private ListView recordList;
     NavController navController;
@@ -36,7 +35,6 @@ public class RecordsListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         final View root = inflater.inflate(R.layout.fragment_records_list, container, false);
 
         recordFilter = root.findViewById(R.id.recordFilter);
