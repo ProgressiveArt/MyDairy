@@ -27,7 +27,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import com.example.mydiary.MVC.GetImg;
 import com.example.mydiary.MVC.controllers.listeners.OnClickRateLimitedDecoratedListener;
 import com.example.mydiary.data.DatabaseAdapter;
 import com.example.mydiary.R;
@@ -124,15 +123,15 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (hasConnection(getActivity()) == true) {
-//                    navController.navigate(R.id.fragment_get_images); //Переход на будущее
-                    Bitmap bmp = null;
-                    GetImg getImg = new GetImg(getActivity());
-                    getImg.execute("https://cdn.icon-icons.com/icons2/2416/PNG/128/letter_love_mail_message_post_wings_valentine_icon_146720.png");
-                    try {
-                        bmp = getImg.get();
-                    } catch (Exception e) {
-                    }
-                    imageView.setImageBitmap(bmp);
+                    navController.navigate(R.id.fragment_get_images); //Переход на будущее
+//                    Bitmap bmp = null;
+//                    GetImg getImg = new GetImg(getActivity());
+//                    getImg.execute("https://cdn.icon-icons.com/icons2/2416/PNG/128/letter_love_mail_message_post_wings_valentine_icon_146720.png");
+//                    try {
+//                        bmp = getImg.get();
+//                    } catch (Exception e) {
+//                    }
+//                    imageView.setImageBitmap(bmp);
                 } else {
                     Toast.makeText(getActivity(),"Нет доступа в интернет, но можно загрузить картинку с телефона" ,Toast.LENGTH_SHORT).show();
                 }

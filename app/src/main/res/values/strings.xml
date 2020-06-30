@@ -7,7 +7,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="light">Датчик освещенности</string>
     <string name="menu_home">Домашняя страница</string>
-    <string name="menu_records">Записи в ежедневнике</string>
+    <string name="menu_records">Ежедневник</string>
     <string name="menu_sensors">Датчики</string>
     <string name="edit_page">Редактор</string>
     <string name="home_second">Home Second</string>
