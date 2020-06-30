@@ -1,11 +1,14 @@
 package com.example.mydiary.MVC.controllers.fragmnets.records;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Base64;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.example.mydiary.MVC.GetImg;
 import com.example.mydiary.MVC.controllers.listeners.OnClickRateLimitedDecoratedListener;
 import com.example.mydiary.data.DatabaseAdapter;
 import com.example.mydiary.R;
@@ -44,7 +49,8 @@ public class EditRecordFragment extends Fragment {
     private EditText dateBox;
     private EditText recordBox;
 
-    Button getImage;
+    Button getImageFromDevice;
+    Button getImageFromServer;
     EasyImage easyImage;
     ImageView imageView;
 
@@ -57,7 +63,8 @@ public class EditRecordFragment extends Fragment {
         final View root = inflater.inflate(R.layout.fragment_edit_record, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
-        getImage = root.findViewById(R.id.getImage);
+        getImageFromDevice = root.findViewById(R.id.getImageFromDevice);
+        getImageFromServer = root.findViewById(R.id.getImageFromServer);
         imageView = root.findViewById(R.id.imageView2);
 
         recordBox = root.findViewById(R.id.record);
@@ -71,7 +78,7 @@ public class EditRecordFragment extends Fragment {
             public void onClick(View view) {
                 setDate(root);
             }
-        },buttonDelay));
+        }, buttonDelay));
 
 
         Button delButton = root.findViewById(R.id.deleteButton);
@@ -80,7 +87,7 @@ public class EditRecordFragment extends Fragment {
             public void onClick(View view) {
                 delete(root);
             }
-        },buttonDelay));
+        }, buttonDelay));
 
         Button saveButton = root.findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
@@ -88,7 +95,7 @@ public class EditRecordFragment extends Fragment {
             public void onClick(View view) {
                 save(root);
             }
-        },buttonDelay));
+        }, buttonDelay));
 
         if (getArguments() != null && getArguments().containsKey("id")) {
             recordId = getArguments().getLong("id") + 1;
@@ -113,8 +120,27 @@ public class EditRecordFragment extends Fragment {
                 .allowMultiple(false)
                 .build();
 
+        getImageFromServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hasConnection(getActivity()) == true) {
+//                    navController.navigate(R.id.fragment_get_images); //Переход на будущее
+                    Bitmap bmp = null;
+                    GetImg getImg = new GetImg(getActivity());
+                    getImg.execute("https://cdn.icon-icons.com/icons2/2416/PNG/128/letter_love_mail_message_post_wings_valentine_icon_146720.png");
+                    try {
+                        bmp = getImg.get();
+                    } catch (Exception e) {
+                    }
+                    imageView.setImageBitmap(bmp);
+                } else {
+                    Toast.makeText(getActivity(),"Нет доступа в интернет, но можно загрузить картинку с телефона" ,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         final Fragment thisFragment = this;
-        getImage.setOnClickListener(new View.OnClickListener() {
+        getImageFromDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 easyImage.openGallery(thisFragment);
@@ -246,5 +272,19 @@ public class EditRecordFragment extends Fragment {
         dateBox.setText(DateUtils.formatDateTime(getActivity(),
                 date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    public static boolean hasConnection(final Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        return wifiInfo != null && wifiInfo.isConnected();
     }
 }

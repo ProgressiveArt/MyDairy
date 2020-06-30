@@ -48,5 +48,14 @@
         android:id="@+id/fragment_edit_record"
         android:name="com.example.mydiary.MVC.controllers.fragmnets.records.EditRecordFragment"
         android:label="@string/edit_page"
-        tools:layout="@layout/fragment_edit_record" />
+        tools:layout="@layout/fragment_edit_record" >
+        <action
+            android:id="@+id/action_fragment_edit_record_to_fragment_get_images"
+            app:destination="@id/fragment_get_images" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_get_images"
+        android:name="com.example.mydiary.getImagesFragment"
+        android:label="fragment_get_images"
+        tools:layout="@layout/fragment_get_images" />
 </navigation>

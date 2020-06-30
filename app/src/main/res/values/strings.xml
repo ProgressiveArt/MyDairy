@@ -19,7 +19,8 @@
     <string name="save_text">Сохранить</string>
     <string name="add_text">Добавить</string>
     <string name="del_text">Удалить</string>
-    <string name="get_img_text">Выбрать изображение</string>
+    <string name="get_img_from_device_text">Выбрать изображение с телефона</string>
+    <string name="get_img_from_server_text">Выбрать изображение</string>
     <string name="about_title">About</string>
     <string name="exit_title">Выход</string>
     <string name="send_notifi_text">Отправить уведомление</string>
