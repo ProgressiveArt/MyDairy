@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,11 +42,13 @@ public class RecordsListFragment extends Fragment {
         recordFilter = root.findViewById(R.id.recordFilter);
 
         recordList = root.findViewById(R.id.list);
+
         recordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("id", id);
+                String recordId = ((TextView)view.findViewById(R.id.recordId)).getText().toString();
+                bundle.putLong("id", Long.parseLong(recordId));
                 navController.navigate(R.id.fragment_edit_record, bundle);
             }
         });

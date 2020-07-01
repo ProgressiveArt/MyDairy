@@ -59,6 +59,7 @@ public class ItemDiaryAdapter extends ArrayAdapter<Record> {
 
         ((TextView) convertView.findViewById(R.id.textView2)).setText(record.getDate());
         ((TextView) convertView.findViewById(R.id.textView3)).setText(record.getRecord());
+        ((TextView) convertView.findViewById(R.id.recordId)).setText(String.valueOf(record.getId()));
 
         String imagePath = record.getImagePath();
         Bitmap bitmap = null;

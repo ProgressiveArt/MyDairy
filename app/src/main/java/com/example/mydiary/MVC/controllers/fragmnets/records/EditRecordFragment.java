@@ -95,6 +95,7 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 save(root);
+
             }
         }, buttonDelay));
 
@@ -112,7 +113,7 @@ public class EditRecordFragment extends Fragment {
         }
 
         if (getArguments() != null && getArguments().containsKey("id")) {
-            recordId = getArguments().getLong("id") + 1;
+            recordId = getArguments().getLong("id");
         }
 
         adapter = new DatabaseAdapter(getActivity());
