@@ -95,7 +95,6 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 save(root);
-
             }
         }, buttonDelay));
 
@@ -122,9 +121,10 @@ public class EditRecordFragment extends Fragment {
             Record record = adapter.getRecord(recordId);
             dateBox.setText(record.getDate());
             recordBox.setText(String.valueOf(record.getRecord()));
-            imagePath = record.getImagePath();
+            if (imagePath == null)
+                imagePath = record.getImagePath();
             Bitmap bitmap = null;
-            if(imagePath.contains("EasyImage")) {
+            if (imagePath.contains("EasyImage")) {
                 bitmap = BitmapFactory.decodeFile(imagePath);
             } else {
                 GetImg getImg = new GetImg(getActivity());
@@ -145,16 +145,18 @@ public class EditRecordFragment extends Fragment {
                 .allowMultiple(false)
                 .build();
 
-        getImageFromServer.setOnClickListener(new View.OnClickListener() {
+        getImageFromServer.setOnClickListener(new OnClickRateLimitedDecoratedListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (hasConnection(getActivity()) == true) {
-                    navController.navigate(R.id.fragment_get_images);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("id", recordId);
+                    navController.navigate(R.id.fragment_get_images, bundle);
                 } else {
                     Toast.makeText(getActivity(), "Нет доступа в интернет, но можно загрузить картинку с телефона", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }));
 
         final Fragment thisFragment = this;
         getImageFromDevice.setOnClickListener(new View.OnClickListener() {

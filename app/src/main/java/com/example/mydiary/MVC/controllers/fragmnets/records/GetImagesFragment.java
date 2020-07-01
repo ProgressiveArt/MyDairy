@@ -33,6 +33,7 @@ public class GetImagesFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private ListView lv;
     NavController navController;
+    private long recordId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,11 +41,16 @@ public class GetImagesFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_get_images, container, false);
         navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
 
+        if (getArguments() != null && getArguments().containsKey("id")) {
+            recordId = getArguments().getLong("id");
+        }
+
         lv = root.findViewById(R.id.listView1);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
+                bundle.putLong("id", recordId);
                 bundle.putString("url", titleList.get((int) id));
                 navController.navigate(R.id.fragment_edit_record, bundle);
             }
