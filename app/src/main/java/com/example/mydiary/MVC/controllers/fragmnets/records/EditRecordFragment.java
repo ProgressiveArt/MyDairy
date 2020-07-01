@@ -175,9 +175,15 @@ public class EditRecordFragment extends Fragment {
             @Override
             public void onMediaFilesPicked(MediaFile[] imageFiles, MediaSource source) {
                 MediaFile imageFile = imageFiles[0];
+                String oldPath = imagePath;
                 imagePath = imageFile.getFile().getAbsolutePath();
-                Bitmap bmp = BitmapFactory.decodeFile(imagePath);
-                imageView.setImageBitmap(bmp);
+                try {
+                    Bitmap bmp = BitmapFactory.decodeFile(imagePath);
+                    imageView.setImageBitmap(bmp);
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "Надо загрузить картинку", Toast.LENGTH_SHORT).show();
+                    imagePath = oldPath;
+                }
             }
 
             @Override
